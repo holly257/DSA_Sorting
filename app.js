@@ -69,4 +69,23 @@ function mSort(array) {
     return merge(left, right, array);
 }
 
-console.log(mSort(data));
+//console.log(mSort(data));
+
+
+//bubble sort/sort in place
+function bSort(array){
+    let swaps = 0;
+    for(let i = 0; i < array.length; i++){
+        if(array[i] > array[i + 1]){
+            swap(array, i, i+1);
+            swaps++;
+        }
+    }
+
+    if(swaps > 0){
+        return bSort(array);
+    }
+    return array
+}
+
+console.log(bSort(data))
