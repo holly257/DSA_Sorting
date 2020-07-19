@@ -88,4 +88,5 @@ function bSort(array){
     return array
 }
 
-console.log(bSort(data))
+//console.log(bSort(data))
+

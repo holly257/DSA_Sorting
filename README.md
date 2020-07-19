@@ -37,6 +37,5 @@
 6. Bucket sort
     - Write an O(n) algorithm to sort an array of integers, where you know in advance what the lowest and highest values are. 
     - You can't use arr.splice(), shift() or unshift() for this exercise.
-
 8. Sorting books
     - Imagine that I gave you 20 books to sort in alphabetical order. Express this as an algorithm and then implement your algorithm.
