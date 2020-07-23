@@ -217,36 +217,27 @@ function mergeData(left, right, array){
 }
 
 function getLinkedListLength(list){
-    console.log(list)
-    let value = 0;
-    if(list.head.next == null){
-        return value;
-    }
+    let ptr = list.head
+    let count = 2;
 
-    if(list.head.next){
-        console.log(list)
-        value++
-        list = list.head.next
-        console.log(list)
-        getLinkedListLength(list)
-    } else if(list.next){
-        console.log(list)
-        value++
-        list = list.next
-        getLinkedListLength(list)
-    } else return value;
+    while(ptr.next){
+        count = count + 1
+        ptr = ptr.next
+    }
+    return count;
 }
 
 function mergeSort(list) {
-    console.log(list)
     const length = getLinkedListLength(list)
-    //console.log(length)
+    console.log(length)
 
     if (length <= 1) {
         return list;
     }
 
-    // const middle = Math.floor(array.length / 2);
+    const middle = Math.floor(length / 2);
+
+    //https://www.youtube.com/watch?v=KB31cbIqRPs
     // let left = array.slice(0, middle);
     // let right = array.slice(middle, array.length);
 
