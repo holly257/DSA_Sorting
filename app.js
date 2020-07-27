@@ -135,4 +135,14 @@ function bucketSort(array, min, max, bucket_size) {
 }
 
 let dataForBucket = [3,7,2,12,17,38,29,31,22,11,34,1]
-console.log(bucketSort(dataForBucket, 1, 38))
+//console.log(bucketSort(dataForBucket, 1, 38))
+
+// 8. Sorting books
+let bookData = ['Time and How to Spend it', 'Walking Each Other Home', 'Finding Your Element', 'What Color is Your Parachute', 
+    'What I Know For Sure', 'The 4-Hour Workweek', 'Getting Things Done', 'Theological Political Treatise',
+    'Through Painted Deserts', 'The Four', 'Animal Farm', 'The Design of Everyday Things',
+    'Structures', 'Why Buildings Fall Down', 'Zero to One', 'Engineer to Win',
+    'Set Phasers on Stun', 'An Astronauts Guide to Life', 'Thing Explainer', 'Creativity Inc']
+
+//console.log(qSort(bookData))
+//console.log(mSort(bookData))
