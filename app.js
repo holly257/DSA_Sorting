@@ -90,3 +90,50 @@ function bSort(array){
 
 //console.log(bSort(data))
 
+
+// 6. Bucket sort
+//     - Write an O(n) algorithm to sort an array of integers, where you know in 
+//     advance what the lowest and highest values are. 
+//     - You can't use arr.splice(), shift() or unshift() for this exercise.
+function insertionSort(array) {
+    var length = array.length;
+    
+    for(var i = 1; i < length; i++) {
+        var temp = array[i];
+        for(var j = i - 1; j >= 0 && array[j] > temp; j--) {
+            array[j+1] = array[j];
+        }
+        array[j+1] = temp;
+    }
+    
+    return array;
+  }
+function bucketSort(array, min, max, bucket_size) {
+    if(array.length < 2) {
+        return array
+    }
+    
+    bucket_size = bucket_size || 5
+    let bucket_count = Math.floor((max - min) / bucket_size + 1) 
+    let allBuckets = new Array(bucket_count)
+    
+    for (let i = 0; i < allBuckets.length; i++) {
+        allBuckets[i] = [];
+    }
+
+    array.forEach(function (currentVal) {
+        allBuckets[Math.floor((currentVal - min) /bucket_size)].push(currentVal);
+    })
+
+    array.length = 0;
+console.log(allBuckets)
+    allBuckets.forEach(function(bucket) {
+        insertionSort(bucket);
+        bucket.forEach(function (element) {
+            array.push(element)
+        })
+    })
+}
+
+let dataForBucket = [3,7,2,12,17,38,29,31,22,11,34,1]
+console.log(bucketSort(dataForBucket, 1, 38))

@@ -249,4 +249,4 @@ function mergeSort(list) {
 //console.log(newData)
 
 
-console.log(main())
+//console.log(main())
