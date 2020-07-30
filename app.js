@@ -146,3 +146,5 @@ let bookData = ['Time and How to Spend it', 'Walking Each Other Home', 'Finding 
 
 //console.log(qSort(bookData))
 //console.log(mSort(bookData))
+
+//think through sorting set of physical books -> what algorithm does that resemble

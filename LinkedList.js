@@ -187,7 +187,6 @@ let data = [30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 55, 78, 50, 13, 40, 48, 32, 
 
 function main(){
     const linkedL = new linkedList()
-    //linkedL.insertFirst(3)
     data.forEach(item => linkedL.insertLast(item))
 
     mergeSort(linkedL)
@@ -238,6 +237,7 @@ function mergeSort(list) {
     const middle = Math.floor(length / 2);
 
     //https://www.youtube.com/watch?v=KB31cbIqRPs
+    //talked to Vincent, different approach than ^
     // let left = array.slice(0, middle);
     // let right = array.slice(middle, array.length);
 
