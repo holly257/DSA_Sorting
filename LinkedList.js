@@ -195,7 +195,7 @@ class linkedList {
 
 //5. sort linked list using merge
 //let data = [30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 55, 78, 50, 13, 40, 48, 32, 26, 2, 14, 33, 45, 72, 56, 44, 21, 88, 27, 68, 15, 62, 93, 98, 73, 28, 16, 46, 87, 28, 65, 38, 67, 16, 85, 63, 23, 69, 64, 91, 9, 70, 81, 27, 97, 82, 6, 88, 3, 7, 46, 13, 11, 64, 76, 31, 26, 38, 28, 13, 17, 69, 90, 1, 6, 7, 64, 43, 9, 73, 80, 98, 46, 27, 22, 87, 49, 83, 6, 39, 42, 51, 54, 84, 34, 53, 78, 40, 14, 5]
-let data = [5,1,3,6,2,8,7,4]
+
 function main(){
     const linkedL = new linkedList()
     data.forEach(item => linkedL.insertLast(item))
@@ -204,28 +204,29 @@ function main(){
     return linkedL
 }
 //merge sort
-function mergeData(left, right, list){
-    while(!left.isEmpty() && !right.isEmpty()){
+function mergeData(left, right, final){
+    while((!isEmpty(left) )&& !isEmpty(right)){
         if(left.head.value < right.head.value){
-            let curr = removeHead(left)
-            list.insertLast(curr)
+            console.log(removeHead(left))
+            // let curr = removeHead(left)
+            // final.insertLast(curr)
         } else {
-            let curr = removeHead(right)
-            list.insertLast(curr)
+            console.log(removeHead(right))
+            // let curr = removeHead(right)
+            // final.insertLast(curr)
         }
     }
-    
-    while(!left.isEmpty()){
-        let curr = removeHead(left)
-        list.insertLast(curr)
-    }
+    // while(!isEmpty(left)){
+    //     let curr = removeHead(left)
+    //     final.insertLast(curr)
+    // }
 
-    while(!right.isEmpty()){
-        let curr = removeHead(right)
-        list.insertLast(curr)
-    }
+    // while(!isEmpty(right)){
+    //     let curr = removeHead(right)
+    //     final.insertLast(curr)
+    // }
     
-    return list;
+    return final;
 }
 function removeHead(list) {
     if (!list.head) {
@@ -260,30 +261,29 @@ function mergeSort(list) {
     const mid = Math.floor(length/2)
 
     let final = new linkedList();
-    let right = list.head
-    let curr
+    let right = new linkedList();
+    right.head = list.head
+    let curr = list.head
     let count =0;
 
-    while(right.next && count < mid){
+    while((right.head.next || right.next) && count < mid){
         count = count + 1
         curr = right
         right = right.next
     }
 
-    curr.next = null;    
+    curr.next = null; 
 
     if (length <= 1) {
         return list;
     }
-
-    //https://www.youtube.com/watch?v=KB31cbIqRPs
-
+    console.log(list, right)
     list = mergeSort(list);
     right = mergeSort(right);
-    return mergeData(list, right, final);
+    //return mergeData(list, right, final);
 }
 
 //console.log(newData)
 
-
+let data = [5,1,3,6,2,8,7,4]
 console.log(main())
