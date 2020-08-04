@@ -2,288 +2,254 @@
 //Then write a linked list class and its core functions
 //(insertFirst, insertLast, remove, find) from scratch.
 
-class _Node {
-    constructor(value, next) {
-        this.value = value;
-        this.next = next;
-    }
+// Create Node of LinkedList
+function Node(data) {
+    this.node = data;
+    this.next = null;
 }
 
-class linkedList {
-    constructor() {
-        this.head = null;
+// To initialize a linkedlist
+function LinkedList(list) {
+    this.head = list || null;
+}
+
+// Function to insert The new Node into the linkedList
+LinkedList.prototype.insert = function (data) {
+    // Check if the linked list is empty
+    // so insert first node and lead head
+    // points to generic node
+    if (this.head === null) this.head = new Node(data);
+    else {
+        // If linked list is not empty, insert the node
+        // at the end of the linked list
+        let list = this.head;
+        while (list.next) {
+            list = list.next;
+        }
+
+        // Now here list pointer points to last
+        // node let’s insert out new node in it
+        list.next = new Node(data);
+    }
+};
+
+// Function to print linkedList
+LinkedList.prototype.iterate = function () {
+    // First we will check whether out
+    // linked list is empty or node
+    if (this.head === null) return null;
+
+    // If linked list is not empty we will
+    // iterate from each Node and prints
+    // it’s value store in “data” property
+
+    let list = this.head;
+
+    // we will iterate until our list variable
+    // contains the “Next” value of the last Node
+    // i.e-> null
+    while (list) {
+        document.write(list.node);
+        if (list.next) document.write(' -> ');
+        list = list.next;
+    }
+};
+
+// Function to mergesort a linked list
+LinkedList.prototype.mergeSort = function (list) {
+    if (list.next === null) return list;
+
+    let count = 0;
+    let countList = list;
+    let leftPart = list;
+    let leftPointer = list;
+    let rightPart = null;
+    let rightPointer = null;
+
+    // Counting the nodes in the received linkedlist
+    while (countList.next !== null) {
+        count++;
+        countList = countList.next;
     }
 
-    insertFirst(item) {
-        this.head = new _Node(item, this.head);
+    // counting the mid of the linked list
+    let mid = Math.floor(count / 2);
+    let count2 = 0;
+
+    // separating the left and right part with
+    // respect to mid node in tke linked list
+    while (count2 < mid) {
+        count2++;
+        leftPointer = leftPointer.next;
     }
 
-    insertBefore(newItem, itemToInsertBefore) {
-        // If the list is empty
-        if (!this.head) {
-            return null;
-        }
-        //if inserting before first item in list??
-        if (this.head.value == itemToInsertBefore) {
-            let firstNode = this.head;
-            this.head = new _Node(newItem, this.head);
-            this.head.next = firstNode;
-            return;
-        }
+    rightPart = new LinkedList(leftPointer.next);
+    leftPointer.next = null;
 
-        // Start at the head
-        let currNode = this.head;
-        // Keep track of previous
-        let previousNode = this.head;
+    // Here are two linked list which
+    // contains the left most nodes and right
+    // most nodes of the mid node
+    return this._mergeSort(this.mergeSort(leftPart), this.mergeSort(rightPart.head));
+};
 
-        while (currNode !== null && currNode.value !== itemToInsertBefore) {
-            // Save the previous node
-            previousNode = currNode;
-            currNode = currNode.next;
-        }
-        if (currNode === null) {
-            console.log('Item not found');
-            return;
-        }
+// Merging both lists in sorted manner
+LinkedList.prototype._mergeSort = function (left, right) {
+    // Create a new empty linked list
+    let result = new LinkedList();
 
-        let newNode = new _Node(newItem);
-        newNode.next = currNode;
-        previousNode.next = newNode;
-    }
+    let resultPointer = result.head;
+    let pointerLeft = left;
+    let pointerRight = right;
 
-    insertAfter(newItem, itemToInsertAfter) {
-        // If the list is empty
-        if (!this.head) {
-            return null;
-        }
+    // If true then add left most node value in result,
+    // increment left pointer else do the same in
+    // right linked list.
+    // This loop will be executed until pointer's of
+    // a left node or right node reached null
+    while (pointerLeft && pointerRight) {
+        let tempNode = null;
 
-        //inserting after the first item in the list
-        if (this.head.value == itemToInsertAfter) {
-            let nodeAfterNewNode = this.head.next;
-            this.head.next = new _Node(newItem, nodeAfterNewNode);
-            return;
-        }
-
-        // Start at the head
-        let currNode = this.head;
-        // Keep track of next
-        let nextNode = this.head;
-
-        while (currNode !== null && currNode.value !== itemToInsertAfter) {
-            console.log(currNode)
-            // Save the next node
-            currNode = currNode.next;
-            nextNode = currNode.next;
-        }
-        if (currNode === null) {
-            console.log('Item not found');
-            return;
-        }
-
-        let newNode = new _Node(newItem);
-        newNode.next = nextNode;
-        currNode.next = newNode;
-    }
-
-    insertAt(newItem, position) {
-        // If the list is empty
-        if (!this.head) {
-            return null;
-        }
-
-        //inserting at the first item in the list
-        if (position === 1) {
-            this.insertFirst(newItem);
-            return;
-        }
-
-        //start count at one for the first item in the list
-        let count = 1;
-        let currNode = this.head;
-        let previousNode = this.head;
-
-        //keep traversing while there are items and the count isnt the position
-        while (currNode !== null && count !== position) {
-            previousNode = currNode;
-            currNode = currNode.next;
-            //increase the count for each item in the list
-            count++;
-        }
-
-        if (currNode === null) {
-            console.log('Item not found');
-            return;
-        }
-
-        let newNode = new _Node(newItem);
-        newNode.next = currNode;
-        previousNode.next = newNode;
-    }
-
-    insertLast(item) {
-        if (this.head === null) {
-            this.insertFirst(item);
+        // Check if the right node's value is greater than
+        // left node's value
+        if (pointerLeft.node > pointerRight.node) {
+            tempNode = pointerRight.node;
+            pointerRight = pointerRight.next;
         } else {
-            let tempNode = this.head;
-            while (tempNode.next !== null) {
-                tempNode = tempNode.next;
-            }
-            tempNode.next = new _Node(item, null);
+            tempNode = pointerLeft.node;
+            pointerLeft = pointerLeft.next;
+        }
+
+        if (result.head == null) {
+            result.head = new Node(tempNode);
+            resultPointer = result.head;
+        } else {
+            resultPointer.next = new Node(tempNode);
+            resultPointer = resultPointer.next;
         }
     }
 
-    find(item) {
-        // Start at the head
-        let currNode = this.head;
-        // If the list is empty
-        if (!this.head) {
-            return null;
-        }
-        // Check for the item
-        while (currNode.value !== item) {
-            /* Return null if it's the end of the list 
-               and the item is not on the list */
-            if (currNode.next === null) {
-                return null;
-            } else {
-                // Otherwise, keep looking
-                currNode = currNode.next;
-            }
-        }
-        // Found it
-        return currNode;
-    }
+    // Add the remaining elements in the last of resultant
+    // linked list
+    resultPointer.next = pointerLeft;
+    while (resultPointer.next) resultPointer = resultPointer.next;
 
-    remove(item) {
-        // If the list is empty
-        if (!this.head) {
-            return null;
-        }
-        // If the node to be removed is head, make the next node head
-        if (this.head.value === item) {
-            this.head = this.head.next;
-            return;
-        }
-        // Start at the head
-        let currNode = this.head;
-        // Keep track of previous
-        let previousNode = this.head;
+    resultPointer.next = pointerRight;
 
-        while (currNode !== null && currNode.value !== item) {
-            // Save the previous node
-            previousNode = currNode;
-            currNode = currNode.next;
-        }
-        if (currNode === null) {
-            console.log('Item not found');
-            return;
-        }
-        previousNode.next = currNode.next;
-    }
-
-    removeHead() {
-        // If the list is empty
-        if (!this.head) {
-            return null;
-        }
-       
-        let curr = this.head
-        this.head = this.head.next;
-        return curr
-    }
-}
+    // Result is  the new sorted linked list
+    return result.head;
+};
 
 //5. sort linked list using merge
-//let data = [30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 55, 78, 50, 13, 40, 48, 32, 26, 2, 14, 33, 45, 72, 56, 44, 21, 88, 27, 68, 15, 62, 93, 98, 73, 28, 16, 46, 87, 28, 65, 38, 67, 16, 85, 63, 23, 69, 64, 91, 9, 70, 81, 27, 97, 82, 6, 88, 3, 7, 46, 13, 11, 64, 76, 31, 26, 38, 28, 13, 17, 69, 90, 1, 6, 7, 64, 43, 9, 73, 80, 98, 46, 27, 22, 87, 49, 83, 6, 39, 42, 51, 54, 84, 34, 53, 78, 40, 14, 5]
-
-function main(){
-    const linkedL = new linkedList()
-    data.forEach(item => linkedL.insertLast(item))
-
-    mergeSort(linkedL)
-    return linkedL
-}
-//merge sort
-function mergeData(left, right, final){
-    while((!isEmpty(left) )&& !isEmpty(right)){
-        if(left.head.value < right.head.value){
-            console.log(removeHead(left))
-            // let curr = removeHead(left)
-            // final.insertLast(curr)
-        } else {
-            console.log(removeHead(right))
-            // let curr = removeHead(right)
-            // final.insertLast(curr)
-        }
-    }
-    // while(!isEmpty(left)){
-    //     let curr = removeHead(left)
-    //     final.insertLast(curr)
-    // }
-
-    // while(!isEmpty(right)){
-    //     let curr = removeHead(right)
-    //     final.insertLast(curr)
-    // }
-    
-    return final;
-}
-function removeHead(list) {
-    if (!list.head) {
-        return null;
-    }
-   
-    let curr = list.head
-    list.head = list.head.next;
-    curr.next = null;
-    return curr
-}
-
-function getLinkedListLength(list){
-    let ptr = list.head
-    let count = 2;
-
-    while(ptr.next){
-        count = count + 1
-        ptr = ptr.next
-    }
-    return count;
-}
-
-function isEmpty(list) {
-    if (!list.head) {
-        return true;
-    } else return false;
-}
-
-function mergeSort(list) {
-    const length = getLinkedListLength(list)
-    const mid = Math.floor(length/2)
-
-    let final = new linkedList();
-    let right = new linkedList();
-    right.head = list.head
-    let curr = list.head
-    let count =0;
-
-    while((right.head.next || right.next) && count < mid){
-        count = count + 1
-        curr = right
-        right = right.next
-    }
-
-    curr.next = null; 
-
-    if (length <= 1) {
-        return list;
-    }
-    console.log(list, right)
-    list = mergeSort(list);
-    right = mergeSort(right);
-    //return mergeData(list, right, final);
-}
+let data = [
+    30,
+    25,
+    32,
+    72,
+    70,
+    51,
+    42,
+    25,
+    24,
+    53,
+    55,
+    78,
+    50,
+    13,
+    40,
+    48,
+    32,
+    26,
+    2,
+    14,
+    33,
+    45,
+    72,
+    56,
+    44,
+    21,
+    88,
+    27,
+    68,
+    15,
+    62,
+    93,
+    98,
+    73,
+    28,
+    16,
+    46,
+    87,
+    28,
+    65,
+    38,
+    67,
+    16,
+    85,
+    63,
+    23,
+    69,
+    64,
+    91,
+    9,
+    70,
+    81,
+    27,
+    97,
+    82,
+    6,
+    88,
+    3,
+    7,
+    46,
+    13,
+    11,
+    64,
+    76,
+    31,
+    26,
+    38,
+    28,
+    13,
+    17,
+    69,
+    90,
+    1,
+    6,
+    7,
+    64,
+    43,
+    9,
+    73,
+    80,
+    98,
+    46,
+    27,
+    22,
+    87,
+    49,
+    83,
+    6,
+    39,
+    42,
+    51,
+    54,
+    84,
+    34,
+    53,
+    78,
+    40,
+    14,
+    5,
+];
 
 //console.log(newData)
+function main() {
+    let linkedL = new LinkedList();
+    data.forEach(item => linkedL.insert(item));
 
-let data = [5,1,3,6,2,8,7,4]
-console.log(main())
+    linkedL = LinkedList.prototype.mergeSort(linkedL.head);
+    return linkedL;
+}
+
+//let data = [5,1,3,6,2,8,7,4]
+console.log(main());
